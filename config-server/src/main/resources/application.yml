@@ -1,0 +1,42 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: external-config-server
+  main:
+    banner-mode: off
+  devtools:
+    livereload:
+      enabled: false
+    add-properties: false
+#Could not merge remote for master remote: null -> native
+#use below properties for git-local
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:///${user.home}/Downloads/config-repo
+          add-label-locations: false
+#use below properties for git-remote
+#        git:
+#          uri: file:///${user.home}/Downloads/config-repo
+#          clone-on-start: true
+#          skip-ssl-validation: true
+#          timeout: 4
+#          delete-untracked-branches: true
+  security:
+    user:
+      name: user
+      password: ${configPassword}
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+#    hostname: localhost
+#logging.level.root=WARN
+#logging.level.org.springframework.web=WARN
+#logging.level.com.capgemini.configserver=DEBUG
